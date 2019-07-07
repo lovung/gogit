@@ -2,39 +2,26 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/lovung/gogit/diff/gond"
-	dmp "github.com/sergi/go-diff/diffmatchpatch"
+	"github.com/lovung/gogit/file"
 )
 
 func main() {
-	// if len(os.Args) < 3 {
-	// 	log.Fatal("./strdiff arg1 arg2")
-	// }
-	var constitution []string
-	constitution = append(constitution, "We the People of the United States, in Order to form a more perfect Union,")
-	constitution = append(constitution, "establish Justice, insure domestic Tranquility, provide for the common defence,")
-	constitution = append(constitution, "promote the general Welfare, and secure the Blessings of Liberty to ourselves")
-	constitution = append(constitution, "and our Posterity, do ordain and establish this Constitution for the United")
-	constitution = append(constitution, "States of America.")
+	if len(os.Args) < 3 {
+		log.Fatal("./main file1 file2")
+	}
 
-	var got []string
-	got = append(got, "TEST")
-	got = append(got, "We the People of the United States, in Order to form a more perfect Union,")
-	got = append(got, "establish Justice, insure domestic Tranquility, provide for the common defence,")
-	got = append(got, "and secure the Blessings of Liberty to ourselves")
-	got = append(got, "and our Posterity, do ordain and establish this Constitution for the United")
-	got = append(got, "States of America.")
+	file1, _ := file.ReadLines(os.Args[1])
+	file2, _ := file.ReadLines(os.Args[2])
 
-	diff := gond.New(constitution, got)
+	diff := gond.New(file1, file2)
 	// diff.OnlyEd()
 	diff.Compose()
 	fmt.Printf("Editdistance: %d\n", diff.Editdistance())
 	fmt.Printf("LCS: %s\n", diff.LcsString())
 	fmt.Println("SES:")
 	diff.PrintSes()
-
-	dmp := diffmatchpatch.New()
-	diffs := dmp.
-	fmt.Println(dmp.DiffPrettyText(diffs))
 }

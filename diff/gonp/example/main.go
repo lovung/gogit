@@ -11,8 +11,8 @@ func main() {
 	// if len(os.Args) < 3 {
 	// 	log.Fatal("./strdiff arg1 arg2")
 	// }
-	origin := file.ReadFile("test/origin.go")
-	edited := file.ReadFile("test/edited.go")
+	origin, _ := file.ReadFile("test/origin.go")
+	edited, _ := file.ReadFile("test/edited.go")
 	diff := gonp.New(string(edited), string(origin))
 	// diff.OnlyEd()
 	diff.Compose()

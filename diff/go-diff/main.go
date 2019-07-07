@@ -17,8 +17,8 @@ const (
 func main() {
 	dmp := diffmatchpatch.New()
 
-	origin := file.ReadFile("test/origin.go")
-	edited := file.ReadFile("test/edited.go")
+	origin, _ := file.ReadFile("test/origin.go")
+	edited, _ := file.ReadFile("test/edited.go")
 
 	diffs := dmp.DiffMain(string(edited), string(origin), true)
 
